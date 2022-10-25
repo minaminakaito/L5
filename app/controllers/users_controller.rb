@@ -6,9 +6,13 @@ class UsersController < ApplicationController
         @user = User.new
     end
     def create
-        @user = User.new(uid: params[:user][:uid], pass: BCrypt::Password.create(params[:user][:pass]))
-        @user.save
-        redirect_to root_path
+        @user = User.create(uid: params[:user][:uid],password: params[:user][:password],
+        password_confirmation: params[:user][:password_confirmation])
+        if @user.save
+            redirect_to users_path
+        else
+            render 'new'
+        end
     end
     def destroy
         tweet = User.find(params[:id])

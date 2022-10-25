@@ -2,7 +2,7 @@
 <% @tweets.each do |tweet| %>
     <p>
         <%= tweet.message %>
-        <% if session[:login_uid] %>
+        <% if current_user %>
             <%= link_to '削除', "/tweets/#{tweet.id}", method: :delete %>
             <% if tweet.likes.count % 2 == 0 %>
                 <%= link_to 'いいね', likes_path(tweet_id: tweet.id), method: :post %>
@@ -14,14 +14,14 @@
 <% end %>
 
 <p>
-<% if session[:login_uid] %>
+<% if current_user %>
     <%= link_to 'ツイート', new_tweet_path %>
 <% end %>
 </p>
 <hr>
 
 <p>
-<% if session[:login_uid] %>
+<% if current_user %>
     <%= link_to 'ログアウト', top_logout_path %>
 <% else %>
     <%= link_to 'ログイン', top_main_path %>
